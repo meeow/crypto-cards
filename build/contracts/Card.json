@@ -21,14 +21,14 @@
       "type": "constructor"
     }
   ],
-  "bytecode": "0x6080604052348015600f57600080fd5b50604051606080610102833981018060405281019080805190602001909291908051906020019092919080519060200190929190505050826000806101000a81548160ff021916908360ff16021790555081600060016101000a81548160ff021916908360ff16021790555080600060026101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505050506035806100cd6000396000f3006080604052600080fd00a165627a7a72305820865adc28db85dceb92a6d05a2b86a39e0bbb0117a176c934d00106062e1bad620029",
-  "deployedBytecode": "0x6080604052600080fd00a165627a7a72305820865adc28db85dceb92a6d05a2b86a39e0bbb0117a176c934d00106062e1bad620029",
+  "bytecode": "0x6080604052348015600f57600080fd5b50604051606080610102833981018060405281019080805190602001909291908051906020019092919080519060200190929190505050826000806101000a81548160ff021916908360ff16021790555081600060016101000a81548160ff021916908360ff16021790555080600060026101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505050506035806100cd6000396000f3006080604052600080fd00a165627a7a72305820815e3074c094fcb1d2f920f6362fa6c5303724987ee0e843aa24a771b46da24e0029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a72305820815e3074c094fcb1d2f920f6362fa6c5303724987ee0e843aa24a771b46da24e0029",
   "sourceMap": "27:235:0:-;;;116:144;8:9:-1;5:2;;;30:1;27;20:12;5:2;116:144:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;196:6;187;;:15;;;;;;;;;;;;;;;;;;220:5;212;;:13;;;;;;;;;;;;;;;;;;248:5;235:10;;:18;;;;;;;;;;;;;;;;;;116:144;;;27:235;;;;;;",
   "deployedSourceMap": "27:235:0:-;;;;;",
   "source": "pragma solidity ^0.4.22;\n\n\ncontract Card {\n    \n    uint8 Rarity;\n    uint8 Class;\n    address Card_Owner;\n    \n    constructor(uint8 rarity, uint8 class, address owner) public {\n        Rarity = rarity;\n        Class = class;\n        Card_Owner = owner;\n    }\n}\n\ncontract BoosterPack {\n\n    address public owner;\n    Card[] cards;\n    \n    uint nonce = 0;\n    function rand(uint min, uint max) public returns (uint){\n        nonce++;\n        return uint(sha3(nonce))%(min+max)-min;\n        \n    }\n    \n    function GenerateCard(bool guaranteedRare) public returns (bool) {\n        uint class_percent = rand(1, 100);\n        uint rarity_percent = rand(1, 100);\n        uint8 class;\n        uint8 rarity;\n        Card newCard;\n        if (class_percent < 25) {\n            class = 0;\n        }\n        else if (class_percent < 50) {\n            class = 1;\n        }\n        else if (class_percent < 75) {\n            class = 2;\n        }\n        else {\n            class = 3;\n        }\n        \n        if (guaranteedRare) {\n            if (rarity_percent < 33) {\n                rarity = 0;\n                newCard = new Card(rarity, class, owner);\n                cards.push(newCard);\n            }\n            else {\n                rarity = 1;\n                newCard = new Card(rarity, class, owner);\n                cards.push(newCard);\n            }\n        }\n        \n        if (rarity_percent < 10) {\n            rarity = 0;\n            newCard = new Card(rarity, class, owner);\n            cards.push(newCard);\n        }\n        else if (rarity_percent >= 10 && rarity_percent < 30) {\n            rarity = 1;\n            newCard = new Card(rarity, class, owner);\n            cards.push(newCard);\n        }\n        else if (rarity_percent >= 30 && rarity_percent < 60) {\n            rarity = 2;\n            newCard = new Card(rarity, class, owner);\n            cards.push(newCard);\n            return false;\n        }\n        else {\n            rarity = 3;\n            newCard = new Card(rarity, class, owner);\n            cards.push(newCard);\n            return false;\n        }\n        return true;\n    }\n    \n    constructor() {\n        owner = msg.sender;\n        bool atLeastOneRare = false;\n        for (int i = 0; i < 5; i++) {\n            if (i == 4 && !atLeastOneRare) {\n                atLeastOneRare = true;\n                GenerateCard(true);\n            }\n            else {\n                if (GenerateCard(false))\n                    atLeastOneRare = true;\n            }\n        }\n    }\n    \n}\n",
-  "sourcePath": "/Users/albertli/Documents/test-blockchain/contracts/BoosterPack.sol",
+  "sourcePath": "/Users/albertli/Documents/project-1/contracts/BoosterPack.sol",
   "ast": {
-    "absolutePath": "/Users/albertli/Documents/test-blockchain/contracts/BoosterPack.sol",
+    "absolutePath": "/Users/albertli/Documents/project-1/contracts/BoosterPack.sol",
     "exportedSymbols": {
       "BoosterPack": [
         331
@@ -614,7 +614,7 @@
                               "name": "sha3",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 413,
+                              "referencedDeclaration": 680,
                               "src": "455:4:0",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -3727,7 +3727,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 403,
+                        "referencedDeclaration": 670,
                         "src": "2157:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -4337,7 +4337,7 @@
     "src": "0:2518:0"
   },
   "legacyAST": {
-    "absolutePath": "/Users/albertli/Documents/test-blockchain/contracts/BoosterPack.sol",
+    "absolutePath": "/Users/albertli/Documents/project-1/contracts/BoosterPack.sol",
     "exportedSymbols": {
       "BoosterPack": [
         331
@@ -4923,7 +4923,7 @@
                               "name": "sha3",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 413,
+                              "referencedDeclaration": 680,
                               "src": "455:4:0",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_sha3_pure$__$returns$_t_bytes32_$",
@@ -8036,7 +8036,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 403,
+                        "referencedDeclaration": 670,
                         "src": "2157:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -8651,5 +8651,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-07-15T22:11:40.223Z"
+  "updatedAt": "2018-07-17T20:02:24.591Z"
 }
