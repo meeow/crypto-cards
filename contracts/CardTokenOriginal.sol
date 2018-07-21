@@ -1,6 +1,5 @@
 pragma solidity ^0.4.22;
 
-
 // @title ERC-721 Non-Fungible Token Standard
 // @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
 //  Note: the ERC-165 identifier for this interface is 0x80ac58cd
@@ -113,7 +112,7 @@ interface ERC721 /* is ERC165 */ {
     //function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes _data) external returns(bytes4);
  //}
 
-contract CardToken {
+contract CardToken is ERC721 {
     mapping (uint256 => address) public cardOwner;
     mapping (address => uint256) public cardsOwned;
     // mapping (uint256 => uint8) public Class;
@@ -146,7 +145,7 @@ contract CardToken {
         return newCardID;
     }
 
-    function printYeet() public returns (uint256) {
+    function printYeet() external returns (uint256) {
         return 1337;
     }
 

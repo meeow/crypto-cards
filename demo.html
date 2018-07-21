@@ -1,302 +1,308 @@
 <html>
  <head>
   <title>Web3 — Simple Demo</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
  </head>
  <body class=”container”>
   <h3>Web3 — Usage Example</h3>
    <div class=”tab-content”>
    <div role=”tabpanel” class=”tab-pane active” id=”blockchain”>
-  <h3> 1. Set the value in the blockchain</h3>
+  <h3> 1. Set the rarity, class, and owner of the card.</h3>
    <div class=”form-group form-inline”>
-    <input type=”text” class=”text form-control” value=”Siri”>
-      <button class=”set btn btn-primary”>Set Value</button>
+    <input type=”text” class=”text form-control” value=1 id="rarity">
+    <input type=”text” class=”text form-control” value=1 id="class">
+    <input type=”text” class=”text form-control” value="0xAe380865fbD4F70e08fD273a455405E332002f05" id="address">
+      <button class=”set btn btn-primary”>Create Card</button>
         <p>Once you set the value, an event will be created which will be used to identify the status of the transaction.</p>
    </div>
-  <h3> 2. Get the current value</h3>
+  <h3> 2. Get the owner of a card</h3>
    <div class=”form-group”>
    <div>
-     current value is <span class=”value”></span>
+     current owner is <span class=”value” id="value-box"></span>
    </div>
     <button class=”get btn btn-primary”>Get Value</button>
-      <p>Click the button to get the current value. The initial value of the variable name is “ZeonLab”.</p>
+      <p>Click the button to get the owner of the current card.</p>
    </div>
   <h3> 3. Contract Calls </h3>
       <p>Javascript calls being made: </p>
    </div>
    </div>
-</body>
-  <script src=”web3.js-develop/dist/web3.js”> </script>
-  <script>
+
+   <script>
+    console.log("yeet");
     var Web3 = require(‘web3’);
     var web3 = new Web3();
     web3.setProvider(new web3.providers.HttpProvider(“http://localhost:8545"));
     var sampleContractABI = [
-  {
-    "constant": false,
-    "inputs": [
       {
-        "name": "_class",
-        "type": "uint8"
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_class",
+            "type": "uint8"
+          },
+          {
+            "name": "_rarity",
+            "type": "uint8"
+          },
+          {
+            "name": "_owner",
+            "type": "address"
+          }
+        ],
+        "name": "_createCard",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
       },
       {
-        "name": "_rarity",
-        "type": "uint8"
+        "constant": true,
+        "inputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "cardsOwned",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "_createCard",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "cardsOwned",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_from",
-        "type": "address"
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_from",
+            "type": "address"
+          },
+          {
+            "name": "_to",
+            "type": "address"
+          },
+          {
+            "name": "_tokenId",
+            "type": "uint256"
+          }
+        ],
+        "name": "safeTransferFrom",
+        "outputs": [],
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "function"
       },
       {
-        "name": "_to",
-        "type": "address"
+        "constant": true,
+        "inputs": [
+          {
+            "name": "_tokenId",
+            "type": "uint256"
+          }
+        ],
+        "name": "ownerOf",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        "name": "_tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "safeTransferFrom",
-    "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "ownerOf",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "balanceOf",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "token_Id",
-        "type": "uint256"
+        "constant": true,
+        "inputs": [
+          {
+            "name": "_owner",
+            "type": "address"
+          }
+        ],
+        "name": "balanceOf",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "getClass",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "cardOwner",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "token_Id",
-        "type": "uint256"
+        "constant": true,
+        "inputs": [
+          {
+            "name": "token_Id",
+            "type": "uint256"
+          },
+          {
+            "name": "_owner",
+            "type": "address"
+          }
+        ],
+        "name": "getClass",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint8"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
       },
       {
-        "name": "_owner",
-        "type": "address"
+        "constant": true,
+        "inputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "cardOwner",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "token_Id",
+            "type": "uint256"
+          },
+          {
+            "name": "_owner",
+            "type": "address"
+          }
+        ],
+        "name": "getRarity",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint8"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "_owner",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "name": "_cardID",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "name": "_class",
+            "type": "uint8"
+          },
+          {
+            "indexed": false,
+            "name": "_rarity",
+            "type": "uint8"
+          }
+        ],
+        "name": "Creation",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "name": "_from",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "name": "_to",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "name": "_tokenId",
+            "type": "uint256"
+          }
+        ],
+        "name": "Transfer",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "name": "_owner",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "name": "_approved",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "name": "_tokenId",
+            "type": "uint256"
+          }
+        ],
+        "name": "Approval",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "name": "_owner",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "name": "_operator",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "name": "_approved",
+            "type": "bool"
+          }
+        ],
+        "name": "ApprovalForAll",
+        "type": "event"
       }
-    ],
-    "name": "getRarity",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "name": "_cardID",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "name": "_class",
-        "type": "uint8"
-      },
-      {
-        "indexed": false,
-        "name": "_rarity",
-        "type": "uint8"
-      }
-    ],
-    "name": "Creation",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "_from",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "_tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "Transfer",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "_approved",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "_tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "Approval",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "_operator",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "name": "_approved",
-        "type": "bool"
-      }
-    ],
-    "name": "ApprovalForAll",
-    "type": "event"
-  }
     ];
     var sampleContract = web3.eth.contract(sampleContractABI);
     var sampleContractInstance = sampleContract.at("0xDb900A7F073b40cFC8875423c6Ca5c57A5Dcfe66");
+    console.log(sampleContractInstance._createCard(document.getElementById('class').value, document.getElementById('rarity').value, document.getElementById('owner').value));
   </script>
+</body>
 </html>
