@@ -113,7 +113,7 @@ interface ERC721 /* is ERC165 */ {
     //function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes _data) external returns(bytes4);
  //}
 
-contract CardToken {
+contract CardToken is ERC721 {
     mapping (uint256 => address) public cardOwner;
     mapping (address => uint256) public cardsOwned;
     // mapping (uint256 => uint8) public Class;
@@ -145,8 +145,12 @@ contract CardToken {
         cardOwner[newCardID] = _owner;
         return newCardID;
     }
+    
+    event Yeet(int val);
 
-    function printYeet() public returns (uint256) {
+
+    function printYeet() public view returns (uint256) {
+        emit Yeet(1337);
         return 1337;
     }
 
