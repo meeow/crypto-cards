@@ -118,15 +118,18 @@ contract CardToken is ERC721 {
     mapping (address => uint256) public cardsOwned;
     // mapping (uint256 => uint8) public Class;
     // mapping (uint256 => uint8) public Rarity;
+    uint256 currentTests = 0;
 
     struct Card {
-        uint8 Class;
-        uint8 Rarity;
+        int Class;
+        int Rarity;
     }
 
     Card[] cards;
 
-    event Creation(address _owner, uint256 _cardID, uint8 _class, uint8 _rarity);
+    event Creation(address _owner, uint256 _cardID, int _class, int _rarity);
+
+    event Confirmation(uint8 test1, uint8 test2);
 
     function _transfer(address _from, address _to, uint256 token_Id) internal {
         cardsOwned[_to]++;
@@ -134,8 +137,8 @@ contract CardToken is ERC721 {
         emit Transfer(_from, _to, token_Id);
     }
 
-    function _createCard(uint8 _class, uint8 _rarity, address _owner) external returns (uint){
-        Card memory _card = Card({
+    function _createCard(int _class, int _rarity, address _owner) public returns (uint){
+        /* Card memory _card = Card({
             Class: _class,
             Rarity: _rarity
         });
@@ -143,18 +146,24 @@ contract CardToken is ERC721 {
         emit Creation(_owner, newCardID, _class, _rarity);
         cardsOwned[_owner]++;
         cardOwner[newCardID] = _owner;
-        return newCardID;
+        return newCardID; */
+        return 999;
+    }
+
+    function test(uint8 test1, uint8 test2) public {
+        emit Confirmation(test1, test2);
+        currentTests++;
     }
     
-    event Yeet(int val);
+    //event Yeet(int val);
 
 
     function printYeet() public view returns (uint256) {
-        emit Yeet(1337);
-        return 1337;
+        //emit Yeet(1337);
+        return currentTests;
     }
 
-    function getClass(uint256 token_Id, address _owner) external view returns (uint8) {
+    /* function getClass(uint256 token_Id, address _owner) external view returns (uint8) {
         if (cardOwner[token_Id] == _owner) {
             return cards[token_Id].Class;
         }
@@ -166,7 +175,7 @@ contract CardToken is ERC721 {
             return cards[token_Id].Rarity;
         }
         return 255;
-    }
+    } */
 
 
     function balanceOf(address _owner) external view returns (uint256) {
