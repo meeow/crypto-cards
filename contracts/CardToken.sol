@@ -121,8 +121,8 @@ contract CardToken is ERC721 {
     uint256 currentTests = 0;
 
     struct Card {
-        int Class;
-        int Rarity;
+        uint8 Class;
+        uint8 Rarity;
     }
 
     Card[] cards;
@@ -137,17 +137,19 @@ contract CardToken is ERC721 {
         emit Transfer(_from, _to, token_Id);
     }
 
-    function _createCard(int _class, int _rarity, address _owner) public returns (uint){
-        /* Card memory _card = Card({
+    function _createCard(uint8 _class, uint8 _rarity, address _owner) public returns (uint256) {
+        Card memory _card = Card({
             Class: _class,
             Rarity: _rarity
         });
+        cardsOwned[_owner] = 0;
+        /*
         uint256 newCardID = cards.push(_card) - 1;
-        emit Creation(_owner, newCardID, _class, _rarity);
         cardsOwned[_owner]++;
-        cardOwner[newCardID] = _owner;
-        return newCardID; */
-        return 999;
+        emit Creation(_owner, newCardID, _class, _rarity);
+        cardOwner[newCardID] = _owner; */
+        uint256 testret = cardsOwned[_owner];
+        return testret;
     }
 
     function test(uint8 test1, uint8 test2) public {
