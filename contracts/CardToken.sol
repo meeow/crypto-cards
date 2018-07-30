@@ -127,7 +127,7 @@ contract CardToken is ERC721 {
 
     Card[] cards;
 
-    event Creation(address _owner, uint256 _cardID, int _class, int _rarity);
+    event Creation(address _owner, uint256 _cardID, uint8 _class, uint8 _rarity);
 
     event Confirmation(uint8 test1, uint8 test2);
 
@@ -142,14 +142,11 @@ contract CardToken is ERC721 {
             Class: _class,
             Rarity: _rarity
         });
-        cardsOwned[_owner] = 0;
-        /*
         uint256 newCardID = cards.push(_card) - 1;
         cardsOwned[_owner]++;
         emit Creation(_owner, newCardID, _class, _rarity);
-        cardOwner[newCardID] = _owner; */
-        uint256 testret = cardsOwned[_owner];
-        return testret;
+        cardOwner[newCardID] = _owner;
+        return newCardID;
     }
 
     function test(uint8 test1, uint8 test2) public {
@@ -165,19 +162,19 @@ contract CardToken is ERC721 {
         return currentTests;
     }
 
-    /* function getClass(uint256 token_Id, address _owner) external view returns (uint8) {
+    function getClass(uint256 token_Id, address _owner) public view returns (uint8) {
         if (cardOwner[token_Id] == _owner) {
             return cards[token_Id].Class;
         }
         return 255;
     }
 
-    function getRarity(uint256 token_Id, address _owner) external view returns (uint8) {
+    function getRarity(uint256 token_Id, address _owner) public view returns (uint8) {
         if (cardOwner[token_Id] == _owner) {
             return cards[token_Id].Rarity;
         }
         return 255;
-    } */
+    }
 
 
     function balanceOf(address _owner) external view returns (uint256) {
