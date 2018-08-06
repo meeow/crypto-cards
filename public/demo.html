@@ -1,3 +1,6 @@
+<!-- Sample html page to change simple fields stored on smart contract
+ -->
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -5,10 +8,20 @@
     <title>Node Client + Server Example + Web3</title>
   </head>
   <body>
+    <p>Login into Metamask before utilizing this application.</p>
+
     <h1>Node Client + Server Example + Web3</h1>
-    <p id="counter">Loading button click data.</p>
+    <p>The value of the test value is: </p>
+    <form>
+      <input type="text" id="myTextField">
+    </form>
     <button id="myButton">Click me!</button>
+
+    <p> To update the value of the test value by one, click below </p>
+
+    <button id="myButton2"> Yeet</button>
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ethjs@0.3.4/dist/ethjs.min.js"></script>
   <script src="client.js"></script>
 </html>

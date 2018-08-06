@@ -1,3 +1,5 @@
+//server-side code for accessing contract on ethereum node running locally
+
 console.log('Server-side code running');
 
 const express = require('express');
@@ -22,7 +24,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/clicked', (req, res) => {
-	var send = -1;
+	var value = -1;
 	contract.methods.printYeet().call(function (err, result) {
 	  if (err) {
 	    //console.log('err');
@@ -32,7 +34,29 @@ app.post('/clicked', (req, res) => {
 	  // Use the function's return value
 	  //console.log("Val is");
 	}).then(function(result) {
-		send = result;
-		console.log(send);
+		value = result;
+		console.log(value);
+		res.send(String(value));
 	});
+});
+
+app.post('/clicked2', (req, res) => {
+	console.log('got 2');
+	contract.methods.test(1, 1).send({from: '0xae380865fbd4f70e08fd273a455405e332002f05'})
+	.on('transactionHash', function(hash){
+	    console.log("hash is ");
+	    console.log(hash);
+	})
+	.on('confirmation', function(confirmationNumber, receipt){
+	    console.log("confirmation is ");
+	    console.log(confirmationNumber);
+	    // console.log("receipt is");
+	    // console.log(receipt);
+	})
+	.on('receipt', function(receipt){
+	    // receipt example
+	    console.log("receipt is");
+	    console.log(receipt);
+	})
+	.on('error', console.error);
 });

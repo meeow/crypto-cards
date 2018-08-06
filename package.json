@@ -1,0 +1,36 @@
+{
+  "name": "project-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "listener.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meeow/project-1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meeow/project-1/issues"
+  },
+  "homepage": "https://github.com/meeow/project-1#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^1.0.0",
+    "ethjs-contract": "^0.2.3",
+    "ethjs-query": "^0.3.8",
+    "node": "^10.8.0",
+    "style-loader": "^0.21.0",
+    "web3": "^1.0.0-beta.35",
+    "webpack": "^4.16.4",
+    "webpack-cli": "^3.1.0"
+  }
+}
